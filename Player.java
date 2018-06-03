@@ -20,7 +20,6 @@ public final class Player {
 	private Card[] cards = new Card[5];
 	private int score = 0;
 	private String winCondition = "";
-	private int HighCardScore= 0000000000;
 	private Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
 	// 11=jack-12=queen-13=King-14=Ace
@@ -343,17 +342,7 @@ public final class Player {
 	public int highCard() {
 		return highestCard();
 	}
-/**
- * 
- */
-	public int HCShowdown(){
-		this.HighCardScore+=this.cards[4].getNum()*1000000000;
-		this.HighCardScore+=this.cards[3].getNum()*10000000;
-		this.HighCardScore+=this.cards[2].getNum()*100000;
-		this.HighCardScore+=this.cards[1].getNum()*1000;
-		this.HighCardScore+=this.cards[0].getNum()*10;
-		return this.HighCardScore;
-	}
+
 /**
  * returns a a win message along with the translated high card.
  * @return string with message for how this hand won

@@ -163,35 +163,5 @@ public class player1Test {
          */
         assertEquals(check, 11);
 	}
-	
-	@Test
-	public void testHigh() {
-		Card one = new Card(2,"H");
-    	Card two = new Card(3,"D");
-    	Card three = new Card(5,"S");
-    	Card four = new Card(9,"C");
-    	Card five = new Card(13,"D");
-    	
-        Player jay = new Player("jay", one, two, three, four, five);
-        int check = jay.evaluateHand();        /*
-         * Assert that values of variables match expectations
-         */
-        assertEquals(check, 11);
-	}
-	@Test
-	public void testHigh2() {
-		Card one = new Card(2,"C");
-    	Card two = new Card(3,"4");
-    	Card three = new Card(4,"S");
-    	Card four = new Card(8,"C");
-    	Card five = new Card(13,"H");
-    	
-        Player jay = new Player("jay", one, two, three, four, five);
-        int check = jay.evaluateHand();        /*
-         * Assert that values of variables match expectations
-         */
-        assertEquals(check, 11);
-	}
-
-
 }
+
