@@ -6,7 +6,11 @@ Takes Input.txt and decides winner out of n numbers of hands
 
 http://codingdojo.org/kata/PokerHands/
 built using maven
+
+
 ===========INSTRUCTIONS==============
+
+
 git clone https://github.com/JayBuckley7/PokerHandsKata.git
 cd %%PokerHandsKata/
 ~/apache-maven-3.2.2/bin/mvn clean compile package
