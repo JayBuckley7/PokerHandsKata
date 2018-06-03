@@ -440,11 +440,11 @@ public final class HoldEm {
 		/*
 		 * Take input file.
 		 */
-		 //System.out.print("Enter the path for the input file: ");
+		 System.out.print("Enter the path for the input file: ");
 
 		Scanner in = new Scanner(System.in);
-		//String inputFileName = in.nextLine();
-		 String inputFileName = "data/hand.txt";
+		String inputFileName = in.nextLine();
+		 //String inputFileName = "data/hand.txt";
 		/*
 		 * Name output file.
 		 */
