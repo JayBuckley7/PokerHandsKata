@@ -59,13 +59,13 @@ public final class Player {
 	 * @param card4
 	 * 				card of int,suit
 	 */
-	public Player(String name, Card card0, Card card1, Card card2, Card card3, Card card4) {
+	public Player(String name, Card[] hand) {
 		this.name = name;
-		this.cards[0] = card0;
-		this.cards[1] = card1;
-		this.cards[2] = card2;
-		this.cards[3] = card3;
-		this.cards[4] = card4;
+		this.cards[0] = hand[0];
+		this.cards[1] = hand[1];
+		this.cards[2] = hand[2];
+		this.cards[3] = hand[3];
+		this.cards[4] = hand[4];
 
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();// init null//<cardnum,timesSeen>
 		for (Card c : this.cards) {

@@ -369,7 +369,7 @@ public final class HoldEm {
 		}
 		Arrays.sort(cards);// puts cards in low to high order
 
-		Player p = new Player(player[0], cards[0], cards[1], cards[2], cards[3], cards[4]);
+		Player p = new Player(player[0], cards);
 		return p;
 
 	}
@@ -440,10 +440,21 @@ public final class HoldEm {
 		/*
 		 * Take input file.
 		 */
-		 System.out.print("Enter the path for the input file: ");
-
-		Scanner in = new Scanner(System.in);
-		String inputFileName = in.nextLine();
+		String cmdLineIn = "";
+		Scanner in = new Scanner(System.in);	
+		String inputFileName = "";
+		try {
+			cmdLineIn=args[0];
+		}catch(Exception e) {
+			System.out.println("didn't find command line input.");
+		}
+		 if(cmdLineIn.equals("")) {
+		 System.out.print("Enter the path for the input file: "); 
+		inputFileName = in.nextLine();
+	
+		 }else {
+			 inputFileName=args[0];
+		 }
 		 //String inputFileName = "data/hand.txt";
 		/*
 		 * Name output file.
