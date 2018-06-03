@@ -3,3 +3,5 @@
 **Authors:** Jacob Buckley
 
 Takes Input.txt and decides winner out of n numbers of hands
+
+http://codingdojo.org/kata/PokerHands/
