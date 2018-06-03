@@ -21,6 +21,23 @@ public final class Player {
 	private int score = 0;
 	private String winCondition = "";
 	private Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	/** CONSTANTS**/
+	private static int STRAIGHT_FLUSH = 9000000;
+	private static int FOUR_KIND = 8000000;
+	private static int FULL_HOUSE = 7000000;
+	private static int FLUSH = 6000000;
+	private static int STRAIGHT = 5000000;
+	private static int THREE_KIND = 4000000;
+	private static int TWO_PAIR = 3000000;
+	private static int ONE_PAIR = 2000000;
+	private static int HIGH_CARD = 10000;
+	private static int SECOND_HIGH = 100;
+	private static int LAST_HIGH = 10;
+	/**card hand association constants **/
+	private static int FullHouseInHand = 111;
+	private static int TwoPairInHand = 222;
+	
+	 
 
 	// 11=jack-12=queen-13=King-14=Ace
 
@@ -77,34 +94,34 @@ public final class Player {
 	public int evaluateHand() {
 		if (this.hasStraightFlush()) {
 			int k = (Collections.max(this.map.keySet()));
-			this.score = 9000000 + (10000 * k);
+			this.score = STRAIGHT_FLUSH + (HIGH_CARD * k);
 			this.winCondition = "Straight flush: high card " + toEnglish(k);
 
 		} else if (this.hasFourOfAKind()) {
 			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (8000000 + (1000 * k));// 4 of a kind = 7000+10*the value of its pairs
+			this.score = (FOUR_KIND + (HIGH_CARD * k));
 			this.winCondition = "four of a kind: " + toEnglish(k) + "'s";
 
 		} else if (this.hasFullHouse()) {
 			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			map.remove(k);
 			int k2 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (7000000+ (1000 * k) + (1000 * k2));
+			this.score = (FULL_HOUSE+ (HIGH_CARD * k) + (SECOND_HIGH * k2));
 			this.winCondition = "Full house: " + toEnglish(k) + " over " + toEnglish(k2);
 
 		} else if (this.hasFlush()) {
 			int k = (Collections.max(this.map.keySet()));
-			this.score = (6000000 + (10000 * k));
+			this.score = (FLUSH + (HIGH_CARD * k));
 			this.winCondition = "flush: highcard " + toEnglish(k);
 
 		} else if (this.hasStraight()) {
 			int k = (Collections.max(this.map.keySet()));
-			this.score = (5000000 + (10000 * k));
+			this.score = (STRAIGHT + (HIGH_CARD * k));
 			this.winCondition = "straight: high card " + toEnglish(k);
 
 		} else if (this.hasThreeOfAKind()) {
 			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (4000000 + (10000 * k));
+			this.score = (THREE_KIND + (HIGH_CARD * k));
 			this.winCondition = "three of a kind:" + toEnglish(k) + "'s";
 
 		} else if (this.hasTwoPair()) {
@@ -113,7 +130,7 @@ public final class Player {
 			int k2 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			map.remove(k);
 			int k3 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (3000000 + (10000 * k) + (100 * k2) + (10 * k3));
+			this.score = (TWO_PAIR + (HIGH_CARD * k) + (SECOND_HIGH * k2) + (LAST_HIGH * k3));
 			this.winCondition = "two pair: " + toEnglish(k) + "'s and " + toEnglish(k2) + 's';
 
 		} else if (this.hasPair()) {
@@ -124,7 +141,7 @@ public final class Player {
 			int k3 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			map.remove(k);
 			int k4 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (2000000 + (10000 * k)+(1000*k2)+(100*k3) +(10*k4));
+			this.score = (ONE_PAIR + (HIGH_CARD * k)+(SECOND_HIGH*k2)+(SECOND_HIGH*k3) +(LAST_HIGH*k4));
 			this.winCondition = "one pair: " + toEnglish(k) + "'s";
 
 		}
@@ -209,10 +226,10 @@ public final class Player {
 		tmpMap.remove(Collections.max(tmpMap.entrySet(), Map.Entry.comparingByValue()).getKey());// remove that old max
 		int check = Collections.max(tmpMap.values());// now if this is 2 and the old max was 5 we had a full house
 		if (check == 2 && ret == 3) {
-			ret = 5;// this is not possible normally so this wont interfere with duplicates but it
+			ret = FullHouseInHand;// this is not possible normally so this wont interfere with duplicates but it
 					// is cheating
 		} else if (check == 2 && ret == 2) {
-			ret = 8;// this is not possible normally so this wont interfere with duplicates but it
+			ret = TwoPairInHand;// this is not possible normally so this wont interfere with duplicates but it
 					// is cheating
 		}
 		return (ret);
