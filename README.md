@@ -11,7 +11,7 @@ built using maven
 ===========INSTRUCTIONS==============
 
 
-git clone https://github.com/JayBuckley7/PokerHandsKata.git
-cd %%PokerHandsKata/
-~/apache-maven-3.2.2/bin/mvn clean compile package
-java -cp /Users/rbuckley/.m2/repository/junit/junit/4.12/junit-4.12.jar:/Users/rbuckley/PokerHandsKata/target/test-0.0.1-SNAPSHOT.jar  com.codingDojo.pokerHandKata.HoldEm
+git clone https://github.com/JayBuckley7/PokerHandsKata.git <br />
+cd %%PokerHandsKata/ <br />
+~/mvn clean compile package <br />
+java -cp %%/.m2/repository/junit/junit/4.12/junit-4.12.jar:%%Poker/target/CodingDojoKata<-1.0.0-SNAPSHOT.jar  com.codingDojo.pokerHandKata.HoldEm <br />
