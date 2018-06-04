@@ -292,93 +292,6 @@ public final class HoldEm {
 		return status;
 	}
 
-	/**
-	 * turns characters 10-14 back into string for easy reading
-	 * @param k value of card
-	 * @return string pertaining to card value
-	 */
-	private static String cardIntToString(int k) {
-		String temp = "";
-		switch (k) {
-		case 11:
-			temp = "Jack";
-			break;
-		case 12:
-			temp = "Queen";
-			break;
-		case 13:
-			temp = "King";
-			break;
-		case 14:
-			temp = "Ace";
-			break;
-
-		default:
-			temp = String.valueOf(k);
-			break;
-		}
-		return temp;
-	}
-
-	/**	 
-	 * changes Card number letters into numbers for math purposes
-	 *
-	 * @param c
-	 *        card to check    
-	 * @return
-	 * 			integer value of c as a card
-	 */
-	private static int asInt(char c) {
-		int temp = 0;
-
-		switch (c) {
-		case '2':
-			temp = 2;
-			break;
-		case '3':
-			temp = 3;
-			break;
-		case '4':
-			temp = 4;
-			break;
-		case '5':
-			temp = 5;
-			break;
-		case '6':
-			temp = 6;
-			break;
-		case '7':
-			temp = 7;
-			break;
-		case '8':
-			temp = 8;
-			break;
-		case '9':
-			temp = 9;
-			break;
-		case 'T':
-			temp = 10;
-			break;
-		case 'J':
-			temp = 11;
-			break;
-		case 'Q':
-			temp = 12;
-			break;
-		case 'K':
-			temp = 13;
-			break;
-		case 'A':
-			temp = 14;
-			break;
-
-		default:
-			throw new AssertionFailedError("Invalid Character "+ c + " in card number column: Expected 1-9,J,Q,K,A");
-			
-		}
-		return temp;
-	}
-	
 	/**	 
 	 * creates Player and card objects out of valid arrays
 	 *
@@ -401,7 +314,7 @@ public final class HoldEm {
 				
 				
 			String c2 = "" + player[i + 1].charAt(1);
-			cards[i] = new Card(asInt(c), c2);
+			cards[i] = new Card(Card.asInt(c), c2);
 			
 			
 			
@@ -436,7 +349,7 @@ public final class HoldEm {
 				else {
 					tieBreaker = score2;
 				}
-				winner = winner +" wins. - with HighCard: " + cardIntToString(tieBreaker);
+				winner = winner +" wins. - with HighCard: " + Card.cardIntToString(tieBreaker);
 				i=0; score1=score2;
 			}else{
 				winner = "Tie.";
@@ -491,34 +404,34 @@ public final class HoldEm {
 		if (p.hasStraightFlush()) {
 			int k = (Collections.max(p.map.keySet()));
 			p.score = STRAIGHT_FLUSH + (HIGH_CARD * k);
-			p.winCondition = "Straight flush: high card " + cardIntToString(k);
+			p.winCondition = "Straight flush: high card " + Card.cardIntToString(k);
 
 		} else if (p.hasFourOfAKind()) {
 			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (FOUR_KIND + (HIGH_CARD * k));
-			p.winCondition = "four of a kind: " + cardIntToString(k) + "'s";
+			p.winCondition = "four of a kind: " + Card.cardIntToString(k) + "'s";
 
 		} else if (p.hasFullHouse()) {
 			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.map.remove(k);
 			int k2 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (FULL_HOUSE+ (HIGH_CARD * k) + (SECOND_HIGH * k2));
-			p.winCondition = "Full house: " + cardIntToString(k) + " over " + cardIntToString(k2);
+			p.winCondition = "Full house: " + Card.cardIntToString(k) + " over " + Card.cardIntToString(k2);
 
 		} else if (p.hasFlush()) {
 			int k = (Collections.max(p.map.keySet()));
 			p.score = (FLUSH + (HIGH_CARD * k));
-			p.winCondition = "flush: highcard " + cardIntToString(k);
+			p.winCondition = "flush: highcard " + Card.cardIntToString(k);
 
 		} else if (p.hasStraight()) {
 			int k = (Collections.max(p.map.keySet()));
 			p.score = (STRAIGHT + (HIGH_CARD * k));
-			p.winCondition = "straight: high card " + cardIntToString(k);
+			p.winCondition = "straight: high card " + Card.cardIntToString(k);
 
 		} else if (p.hasThreeOfAKind()) {
 			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (THREE_KIND + (HIGH_CARD * k));
-			p.winCondition = "three of a kind:" + cardIntToString(k) + "'s";
+			p.winCondition = "three of a kind:" + Card.cardIntToString(k) + "'s";
 
 		} else if (p.hasTwoPair()) {
 			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -527,7 +440,7 @@ public final class HoldEm {
 			p.map.remove(k);
 			int k3 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (TWO_PAIR + (HIGH_CARD * k) + (SECOND_HIGH * k2) + (LAST_HIGH * k3));
-			p.winCondition = "two pair: " + cardIntToString(k) + "'s and " + cardIntToString(k2) + 's';
+			p.winCondition = "two pair: " + Card.cardIntToString(k) + "'s and " + Card.cardIntToString(k2) + 's';
 
 		} else if (p.hasPair()) {
 			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -538,7 +451,7 @@ public final class HoldEm {
 			p.map.remove(k);
 			int k4 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (ONE_PAIR + (HIGH_CARD * k)+(SECOND_HIGH*k2)+(SECOND_HIGH*k3) +(LAST_HIGH*k4));
-			p.winCondition = "one pair: " + cardIntToString(k) + "'s";
+			p.winCondition = "one pair: " + Card.cardIntToString(k) + "'s";
 		}else {
 			
 		}
