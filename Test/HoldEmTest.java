@@ -1,11 +1,11 @@
-package com.codingDojo.pokerHandKata;
+package com.codingdojo.pokerhandkata;
 /**
  * JUnit test fixture for {@code HoldEm}'s kernal methods.
  *
  * @author Jay Buckley
  *
  */
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
