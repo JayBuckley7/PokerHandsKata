@@ -1,8 +1,10 @@
 # [PokerHandKata]
 
 **Authors:** Jacob Buckley
+</pre>
 Made for http://codingdojo.org/kata/PokerHands/ </br>
 Takes Input.txt and decides winner out of n numbers of hands. </br>
+</pre>
 
 ## Instuction and Use
 </pre>
