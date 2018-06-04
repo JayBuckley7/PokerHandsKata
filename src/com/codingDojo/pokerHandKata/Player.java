@@ -18,22 +18,10 @@ public final class Player {
 
 	private String name;
 	private Card[] cards = new Card[5];
-	private int score = 0;
-	private String winCondition = "";
-	private Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	int score = 0;
+	String winCondition = "";
+	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 	/** CONSTANTS**/
-	private static int STRAIGHT_FLUSH = 9000000;
-	private static int FOUR_KIND = 8000000;
-	private static int FULL_HOUSE = 7000000;
-	private static int FLUSH = 6000000;
-	private static int STRAIGHT = 5000000;
-	private static int THREE_KIND = 4000000;
-	private static int TWO_PAIR = 3000000;
-	private static int ONE_PAIR = 2000000;
-	private static int HIGH_CARD = 10000;
-	private static int SECOND_HIGH = 100;
-	private static int LAST_HIGH = 10;
-	/**card hand association constants **/
 	private static int FullHouseInHand = 111;
 	private static int TwoPairInHand = 222;
 	
@@ -84,71 +72,33 @@ public final class Player {
 	 * Methods ----------------------------------------------------------------
 	 */
 	/**
-	 * returns an int score based on the hand and updates private winCondition 
-	 * so that if this player is the winner it will be easy to tell how he won.
-	 *  uses intervals of 10, 1 , 0 thousand so that there is 2 digits between each win category then tacks on high card value to score
-	 *  
-	 * 
-	 * @return a scored hand.
+	 * turns characters 10-14 back into string for easy reading
+	 * @param k value of card
+	 * @return string pertaining to card value
 	 */
-	public int evaluateHand() {
-		if (this.hasStraightFlush()) {
-			int k = (Collections.max(this.map.keySet()));
-			this.score = STRAIGHT_FLUSH + (HIGH_CARD * k);
-			this.winCondition = "Straight flush: high card " + toEnglish(k);
+		private static String cardIntToString(int k) {
+			String temp = "";
+			switch (k) {
+			case 11:
+				temp = "Jack";
+				break;
+			case 12:
+				temp = "Queen";
+				break;
+			case 13:
+				temp = "King";
+				break;
+			case 14:
+				temp = "Ace";
+				break;
 
-		} else if (this.hasFourOfAKind()) {
-			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (FOUR_KIND + (HIGH_CARD * k));
-			this.winCondition = "four of a kind: " + toEnglish(k) + "'s";
+			default:
+				temp = String.valueOf(k);
+				break;
+			}
 
-		} else if (this.hasFullHouse()) {
-			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k2 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (FULL_HOUSE+ (HIGH_CARD * k) + (SECOND_HIGH * k2));
-			this.winCondition = "Full house: " + toEnglish(k) + " over " + toEnglish(k2);
-
-		} else if (this.hasFlush()) {
-			int k = (Collections.max(this.map.keySet()));
-			this.score = (FLUSH + (HIGH_CARD * k));
-			this.winCondition = "flush: highcard " + toEnglish(k);
-
-		} else if (this.hasStraight()) {
-			int k = (Collections.max(this.map.keySet()));
-			this.score = (STRAIGHT + (HIGH_CARD * k));
-			this.winCondition = "straight: high card " + toEnglish(k);
-
-		} else if (this.hasThreeOfAKind()) {
-			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (THREE_KIND + (HIGH_CARD * k));
-			this.winCondition = "three of a kind:" + toEnglish(k) + "'s";
-
-		} else if (this.hasTwoPair()) {
-			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k2 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k3 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (TWO_PAIR + (HIGH_CARD * k) + (SECOND_HIGH * k2) + (LAST_HIGH * k3));
-			this.winCondition = "two pair: " + toEnglish(k) + "'s and " + toEnglish(k2) + 's';
-
-		} else if (this.hasPair()) {
-			int k = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k2 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k3 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			map.remove(k);
-			int k4 = Collections.max(this.map.entrySet(), Map.Entry.comparingByValue()).getKey();
-			this.score = (ONE_PAIR + (HIGH_CARD * k)+(SECOND_HIGH*k2)+(SECOND_HIGH*k3) +(LAST_HIGH*k4));
-			this.winCondition = "one pair: " + toEnglish(k) + "'s";
-
+			return temp;
 		}
-		int k = (Collections.max(this.map.keySet()));
-		this.score += k;
-		return this.score;
-	}
 /**
  * gives back the name of the player
  * @return name of player
@@ -180,7 +130,7 @@ public final class Player {
  * @return true if cards are of consecutive value
  * false otherwise
  */
-	private Boolean isStraight() {
+	 Boolean isStraight() {
 		Boolean tmp = true;
 		for (int i = cards.length - 1; i > 0; i--) {
 			int now = i;
@@ -197,7 +147,7 @@ public final class Player {
  * @return true if true
  * false otherwise
  */
-	private Boolean hasStraightFlush() {
+	 Boolean hasStraightFlush() {
 		boolean tmp = false;
 		// 5 cards of the same suit with consecutive values.
 		// Ranked by the highest card in the hand.
@@ -218,7 +168,7 @@ public final class Player {
  * 8 if 2 pair
  * 
  */
-	private int numDuplicates() {
+	 int numDuplicates() {
 		Map<Integer, Integer> tmpMap = new HashMap<Integer, Integer>();
 		tmpMap.putAll(this.map);// alliasing
 
@@ -240,7 +190,7 @@ public final class Player {
  * @param cards
  * @return highest cards number
  */
-	private int highestCard() {
+	 int highestCard() {
 		Map<Integer, Integer> tmpMap = new HashMap<Integer, Integer>();// init null//
 		for (Card c : this.cards) {
 			int tmpNum = c.getNum();
@@ -257,7 +207,7 @@ public final class Player {
  * @return true if there is
  * false otherwise
  */
-	private Boolean hasFourOfAKind() {
+	 Boolean hasFourOfAKind() {
 		boolean tmp = false;
 		if (numDuplicates() == 4) {
 			tmp = true;
@@ -270,10 +220,10 @@ public final class Player {
  * @return true if present
  * false otherwise
  */
-	private Boolean hasFullHouse() {
+	 Boolean hasFullHouse() {
 		boolean tmp = false;
 
-		if (numDuplicates() == 5) {// duplicates will return 5 if their is duplciate 3
+		if (numDuplicates() == FullHouseInHand) {// duplicates will return 5 if their is duplciate 3
 									// and duplicate 2
 			tmp = true;
 		}
@@ -286,7 +236,7 @@ public final class Player {
 	 * @return true if present
 	 * false otherwise
 	 */
-	private Boolean hasFlush() {
+	 Boolean hasFlush() {
 		boolean tmp = false;
 		if (sameSuit()) {
 			tmp = true;
@@ -299,7 +249,7 @@ public final class Player {
 	 * @return true if present
 	 * false otherwise
 	 */
-	private Boolean hasStraight() {
+	 Boolean hasStraight() {
 		boolean tmp = false;
 		if (isStraight()) {
 			tmp = true;
@@ -312,7 +262,7 @@ public final class Player {
 	 * @return true if present
 	 * false otherwise
 	 */
-	public Boolean hasThreeOfAKind() {
+	 Boolean hasThreeOfAKind() {
 		boolean tmp = false;
 
 		if (numDuplicates() == 3) {
@@ -327,9 +277,9 @@ public final class Player {
 	 * @return true if present
 	 * false otherwise
 	 */
-	public Boolean hasTwoPair() {
+	 Boolean hasTwoPair() {
 		boolean tmp = false;
-		if (numDuplicates() == 8) {// duplicates will return 8 if their is duplciate 2 // and duplicate 2
+		if (numDuplicates() == TwoPairInHand) {// duplicates will return 8 if their is duplciate 2 // and duplicate 2
 			tmp = true;
 
 		}
@@ -342,7 +292,7 @@ public final class Player {
 	 * @return true if present
 	 * false otherwise
 	 */
-	public Boolean hasPair() {
+	 Boolean hasPair() {
 		boolean tmp = false;
 		if (numDuplicates() == 2) {
 			tmp = true;
@@ -356,7 +306,7 @@ public final class Player {
 	 * @return int value of highest cards number
 	 * 
 	 */
-	public int highCard() {
+	 int highCard() {
 		return highestCard();
 	}
 
@@ -364,10 +314,10 @@ public final class Player {
  * returns a a win message along with the translated high card.
  * @return string with message for how this hand won
  */
-	public String getWinCondition() {
+	 String getWinCondition() {
 		String temp = this.winCondition;
 		if (temp.equals("")) {
-			temp = "HighCard: " + toEnglish(this.highCard());
+			temp = "HighCard: " + cardIntToString(this.highCard());
 		}
 		return temp;
 	}
@@ -376,64 +326,9 @@ public final class Player {
 	 * @param position 5-1 of card in hand
 	 * @return number of card at nth position
 	 */
-	public int getCardNum(int n) {
+	 int getCardNum(int n) {
 		return this.cards[n].getNum();
 	}
-/**
- * turns characters 10-14 back into string for easy reading
- * @param k value of card
- * @return string pertaining to card value
- */
-	public String toEnglish(int k) {
-		String temp = "";
-		switch (k) {
 
-		case 2:
-			temp = "2";
-			break;
-		case 3:
-			temp = "3";
-			break;
-		case 4:
-			temp = "4";
-			break;
-		case 5:
-			temp = "5";
-			break;
-		case 6:
-			temp = "6";
-			break;
-		case 7:
-			temp = "7";
-			break;
-		case 8:
-			temp = "8";
-			break;
-		case 9:
-			temp = "9";
-			break;
-		case 10:
-			temp = "10";
-			break;
-		case 11:
-			temp = "Jack";
-			break;
-		case 12:
-			temp = "Queen";
-			break;
-		case 13:
-			temp = "King";
-			break;
-		case 14:
-			temp = "Ace";
-			break;
-
-		default:
-			temp = "woops, something is wrong";
-			break;
-		}
-
-		return temp;
-	}
 
 }

@@ -18,7 +18,18 @@ public final class HoldEm {
 	static String[] player1 = new String[6];
 	static String[] player2 = new String[6];
 	public static int lineCounter = 1;
-
+/**Constants**/
+	private static int STRAIGHT_FLUSH = 9000000;
+	private static int FOUR_KIND = 8000000;
+	private static int FULL_HOUSE = 7000000;
+	private static int FLUSH = 6000000;
+	private static int STRAIGHT = 5000000;
+	private static int THREE_KIND = 4000000;
+	private static int TWO_PAIR = 3000000;
+	private static int ONE_PAIR = 2000000;
+	private static int HIGH_CARD = 10000;
+	private static int SECOND_HIGH = 100;
+	private static int LAST_HIGH = 10;
 	/**
 	 * Private constructor.
 	 */
@@ -391,8 +402,8 @@ public final class HoldEm {
 		String winner = p2.name();
 		String name1 = p1.name();
 
-		int score1 = p1.evaluateHand();
-		int score2 = p2.evaluateHand();
+		int score1 = evaluateHand(p1);
+		int score2 = evaluateHand(p2);
 
 		if (score1 == score2) {
 			int i=4;
@@ -407,7 +418,7 @@ public final class HoldEm {
 					else {
 						tieBreaker = score2;
 					}
-					winner = winner +" wins. - with HighCard: " + p1.toEnglish(tieBreaker);
+					winner = winner +" wins. - with HighCard: " + cardIntToString(tieBreaker);
 					i=0; score1=score2;
 				}else{
 					winner = "Tie.";
@@ -428,7 +439,105 @@ public final class HoldEm {
 
 		System.out.println(winner);
 	}
-    
+	
+	/**
+	 * turns characters 10-14 back into string for easy reading
+	 * @param k value of card
+	 * @return string pertaining to card value
+	 */
+	private static String cardIntToString(int k) {
+		String temp = "";
+		switch (k) {
+		case 11:
+			temp = "Jack";
+			break;
+		case 12:
+			temp = "Queen";
+			break;
+		case 13:
+			temp = "King";
+			break;
+		case 14:
+			temp = "Ace";
+			break;
+
+		default:
+			temp = String.valueOf(k);
+			break;
+		}
+		return temp;
+	}
+	
+	
+	
+	
+	/**
+	 * returns an int score based on the hand and updates private winCondition 
+	 * so that if this player is the winner it will be easy to tell how he won.
+	 *  uses intervals of 10, 1 , 0 thousand so that there is 2 digits between each win category then tacks on high card value to score
+	 *  
+	 * 
+	 * @return a scored hand.
+	 */
+	public static int evaluateHand(Player p) {
+		if (p.hasStraightFlush()) {
+			int k = (Collections.max(p.map.keySet()));
+			p.score = STRAIGHT_FLUSH + (HIGH_CARD * k);
+			p.winCondition = "Straight flush: high card " + cardIntToString(k);
+
+		} else if (p.hasFourOfAKind()) {
+			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.score = (FOUR_KIND + (HIGH_CARD * k));
+			p.winCondition = "four of a kind: " + cardIntToString(k) + "'s";
+
+		} else if (p.hasFullHouse()) {
+			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k2 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.score = (FULL_HOUSE+ (HIGH_CARD * k) + (SECOND_HIGH * k2));
+			p.winCondition = "Full house: " + cardIntToString(k) + " over " + cardIntToString(k2);
+
+		} else if (p.hasFlush()) {
+			int k = (Collections.max(p.map.keySet()));
+			p.score = (FLUSH + (HIGH_CARD * k));
+			p.winCondition = "flush: highcard " + cardIntToString(k);
+
+		} else if (p.hasStraight()) {
+			int k = (Collections.max(p.map.keySet()));
+			p.score = (STRAIGHT + (HIGH_CARD * k));
+			p.winCondition = "straight: high card " + cardIntToString(k);
+
+		} else if (p.hasThreeOfAKind()) {
+			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.score = (THREE_KIND + (HIGH_CARD * k));
+			p.winCondition = "three of a kind:" + cardIntToString(k) + "'s";
+
+		} else if (p.hasTwoPair()) {
+			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k2 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k3 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.score = (TWO_PAIR + (HIGH_CARD * k) + (SECOND_HIGH * k2) + (LAST_HIGH * k3));
+			p.winCondition = "two pair: " + cardIntToString(k) + "'s and " + cardIntToString(k2) + 's';
+
+		} else if (p.hasPair()) {
+			int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k2 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k3 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.map.remove(k);
+			int k4 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
+			p.score = (ONE_PAIR + (HIGH_CARD * k)+(SECOND_HIGH*k2)+(SECOND_HIGH*k3) +(LAST_HIGH*k4));
+			p.winCondition = "one pair: " + cardIntToString(k) + "'s";
+
+		}
+		int k = (Collections.max(p.map.keySet()));
+		p.score += k;
+		return p.score;
+	}
+	
 	/**
      * Main method.
      *
