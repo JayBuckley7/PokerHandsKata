@@ -8,12 +8,11 @@ Takes Input.txt and decides winner out of n numbers of hands. </br>
 
 ## Instuction and Use
 </pre>
-built using maven </br>
-Download Poker.jar </br>
+build using maven </br>
 git clone https://github.com/JayBuckley7/PokerHandsKata </br>
 cd PokerHandsKata/ </br>
 mvn clean install </br>
-java -cp ./target/Poker-1.0.0-SNAPSHOT.jar com.codingDojo.pokerHandKata.HoldEm data/hand.txt </br>
+java -cp ./target/Poker-1.0.0-SNAPSHOT.jar com.codingdojo.pokerhandkata.Holdem data/hand.txt </br>
 </pre>
 
 ## Sample output
