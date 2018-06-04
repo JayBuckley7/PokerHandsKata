@@ -1,17 +1,23 @@
-# [PokerHandKata](http://www.fpsct.org/cfhttp.cfm?script=extensions/includes/resource/resourcecontent.cfm&rid=14676&pageid=2133p://www.fpsct.org/cfhttp.cfm?script=extensions/includes/resource/resourcecontent.cfm&rid=14676&pageid=2133)
+# [PokerHandKata]
 
 **Authors:** Jacob Buckley
+Made for http://codingdojo.org/kata/PokerHands/
+Takes Input.txt and decides winner out of n numbers of hands.
 
-Takes Input.txt and decides winner out of n numbers of hands
-
-http://codingdojo.org/kata/PokerHands/
+## Instuction and Use
+</pre>
 built using maven
+Download Poker.jar
+git clone https://github.com/JayBuckley7/PokerHandsKata
+cd PokerHandsKata/
+mvn clean install
+java -cp ./target/Poker-1.0.0-SNAPSHOT.jar com.codingDojo.pokerHandKata.HoldEm data/hand.txt
+</pre>
 
-
-===========INSTRUCTIONS==============
-
-
-git clone https://github.com/JayBuckley7/PokerHandsKata.git <br />
-cd %%PokerHandsKata/ <br />
-~/mvn clean compile package <br />
-java -cp %%/.m2/repository/junit/junit/4.12/junit-4.12.jar:%%Poker/target/CodingDojoKata<-1.0.0-SNAPSHOT.jar  com.codingDojo.pokerHandKata.HoldEm <br />
+## Sample output
+</pre>
+White wins. - with high card: Ace 
+Black wins. - with full house: 4 over 2 
+Black wins. - with high card: 9
+Tie.
+</pre>
