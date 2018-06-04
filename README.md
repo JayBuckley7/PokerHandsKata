@@ -6,7 +6,7 @@ Made for http://codingdojo.org/kata/PokerHands/
 Takes Input.txt and decides winner out of n numbers of hands. 
 </pre>
 
-## Instuction and Use
+## Instruction and Use
 <pre>
 git clone https://github.com/JayBuckley7/PokerHandsKata 
 cd PokerHandsKata/ 
