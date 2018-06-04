@@ -18,7 +18,7 @@ public final class HoldEm {
 	static String[] player1 = new String[6];
 	static String[] player2 = new String[6];
 	public static int lineCounter = 1;
-/**Constants**/
+	/***************Constants*****************/
 	private static int STRAIGHT_FLUSH = 9000000;
 	private static int FOUR_KIND = 8000000;
 	private static int FULL_HOUSE = 7000000;
@@ -265,7 +265,7 @@ public final class HoldEm {
 	}
 	
 	/**	 
-	 * checks to insure that a Suit acronymn is valid
+	 * checks to insure that a Suit acronym is valid
 	 *
 	 * @param c
 	 *        suit to check    
@@ -291,7 +291,35 @@ public final class HoldEm {
 		}
 		return status;
 	}
-	
+
+	/**
+	 * turns characters 10-14 back into string for easy reading
+	 * @param k value of card
+	 * @return string pertaining to card value
+	 */
+	private static String cardIntToString(int k) {
+		String temp = "";
+		switch (k) {
+		case 11:
+			temp = "Jack";
+			break;
+		case 12:
+			temp = "Queen";
+			break;
+		case 13:
+			temp = "King";
+			break;
+		case 14:
+			temp = "Ace";
+			break;
+
+		default:
+			temp = String.valueOf(k);
+			break;
+		}
+		return temp;
+	}
+
 	/**	 
 	 * changes Card number letters into numbers for math purposes
 	 *
@@ -384,7 +412,41 @@ public final class HoldEm {
 		return p;
 
 	}
-
+	/**
+	 * breaks ties in player score, unless the hands are equal in value.
+	 * @param p1 player one
+	 * @param p2 player two
+	 * @ensures The score of the higher value hand will be higher for its respective player. Unless the cards are ment to tie.
+	 */
+	private static String breakTies(Player p1, Player p2) {
+		int tieBreaker = 0;
+		int i=4;
+		int score1 = 0;
+		int score2 = 0;
+		String winner = p2.name();
+		String name1 = p1.name();
+		while(i!=0) {
+			score1 = p1.getCardNum(i);
+			score2 = p2.getCardNum(i);				
+			if(score1!=score2) {
+				if(score1>score2) {
+					winner=name1;
+					tieBreaker = score1;
+				}
+				else {
+					tieBreaker = score2;
+				}
+				winner = winner +" wins. - with HighCard: " + cardIntToString(tieBreaker);
+				i=0; score1=score2;
+			}else{
+				winner = "Tie.";
+				i--;
+			}
+			
+		}
+		return winner;	
+	}
+	
 	/**	 
 	 * takes 2 valid players, scores their hands,determines winner 
 	 * and displays appropriate victory message
@@ -398,38 +460,15 @@ public final class HoldEm {
 	 */
 	private static void scoreHands(Player p1, Player p2) {
 		Player tmp = p2;
-		int tieBreaker = 0;
 		String winner = p2.name();
 		String name1 = p1.name();
 
-		int score1 = evaluateHand(p1);
-		int score2 = evaluateHand(p2);
+		int score1 = evaluateHand(p1,p2);
+		int score2 = evaluateHand(p2,p1);
 
 		if (score1 == score2) {
-			int i=4;
-			while(i!=0) {
-				score1 = p1.getCardNum(i);
-				score2 = p2.getCardNum(i);				
-				if(score1!=score2) {
-					if(score1>score2) {
-						winner=name1;
-						tieBreaker = score1;
-					}
-					else {
-						tieBreaker = score2;
-					}
-					winner = winner +" wins. - with HighCard: " + cardIntToString(tieBreaker);
-					i=0; score1=score2;
-				}else{
-					winner = "Tie.";
-					i--;
-				}
-				
-			}	
-		}
-
-		
-		if (score1 != score2) {
+			winner = breakTies(p1,p2);
+		}else {
 			if (score1 > score2) {
 				winner = name1;
 				tmp = p1;
@@ -441,37 +480,6 @@ public final class HoldEm {
 	}
 	
 	/**
-	 * turns characters 10-14 back into string for easy reading
-	 * @param k value of card
-	 * @return string pertaining to card value
-	 */
-	private static String cardIntToString(int k) {
-		String temp = "";
-		switch (k) {
-		case 11:
-			temp = "Jack";
-			break;
-		case 12:
-			temp = "Queen";
-			break;
-		case 13:
-			temp = "King";
-			break;
-		case 14:
-			temp = "Ace";
-			break;
-
-		default:
-			temp = String.valueOf(k);
-			break;
-		}
-		return temp;
-	}
-	
-	
-	
-	
-	/**
 	 * returns an int score based on the hand and updates private winCondition 
 	 * so that if this player is the winner it will be easy to tell how he won.
 	 *  uses intervals of 10, 1 , 0 thousand so that there is 2 digits between each win category then tacks on high card value to score
@@ -479,7 +487,7 @@ public final class HoldEm {
 	 * 
 	 * @return a scored hand.
 	 */
-	public static int evaluateHand(Player p) {
+	public static int evaluateHand(Player p, Player Opp) {
 		if (p.hasStraightFlush()) {
 			int k = (Collections.max(p.map.keySet()));
 			p.score = STRAIGHT_FLUSH + (HIGH_CARD * k);
@@ -531,7 +539,8 @@ public final class HoldEm {
 			int k4 = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
 			p.score = (ONE_PAIR + (HIGH_CARD * k)+(SECOND_HIGH*k2)+(SECOND_HIGH*k3) +(LAST_HIGH*k4));
 			p.winCondition = "one pair: " + cardIntToString(k) + "'s";
-
+		}else {
+			
 		}
 		int k = (Collections.max(p.map.keySet()));
 		p.score += k;
