@@ -12,7 +12,7 @@ build using maven </br>
 git clone https://github.com/JayBuckley7/PokerHandsKata </br>
 cd PokerHandsKata/ </br>
 mvn clean install </br>
-java -cp ./target/Poker-1.0.0-SNAPSHOT.jar com.codingdojo.pokehandskata.HoldEm data/hand.txt </br>
+java -cp ./target/Poker-1.0.0-SNAPSHOT.jar com.codingdojo.pokerhandskata.HoldEm data/hand.txt </br>
 </pre>
 
 ## Sample output
