@@ -1,4 +1,4 @@
-package com.codingdojo.pokehandskata;
+package com.codingdojo.pokerhandskata;
 
 import java.util.Collections;
 import java.util.HashMap;

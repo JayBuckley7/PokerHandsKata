@@ -1,4 +1,4 @@
-package com.codingdojo.pokehandskata;
+package com.codingdojo.pokerhandskata;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
