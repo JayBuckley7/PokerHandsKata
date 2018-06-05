@@ -38,11 +38,9 @@ public final class Player {
    */
   public Player(String name, Card[] hand) {
     this.name = name;
-    this.cards[0] = hand[0];
-    this.cards[1] = hand[1];
-    this.cards[2] = hand[2];
-    this.cards[3] = hand[3];
-    this.cards[4] = hand[4];
+    for (int i = 0; i < hand.length; i++) {
+      this.cards[i] = hand[i];
+    }
 
     Map<Integer, Integer> map = new HashMap<Integer, Integer>();// init null//<cardnum,timesSeen>
     for (Card c : this.cards) {
@@ -70,22 +68,22 @@ public final class Player {
   private static String cardIntToString(int k) {
     String temp = "";
     switch (k) {
-      case 11:
-        temp = "Jack";
-        break;
-      case 12:
-        temp = "Queen";
-        break;
-      case 13:
-        temp = "King";
-        break;
-      case 14:
-        temp = "Ace";
-        break;
+    case 11:
+      temp = "Jack";
+      break;
+    case 12:
+      temp = "Queen";
+      break;
+    case 13:
+      temp = "King";
+      break;
+    case 14:
+      temp = "Ace";
+      break;
 
-      default:
-        temp = String.valueOf(k);
-        break;
+    default:
+      temp = String.valueOf(k);
+      break;
     }
 
     return temp;
@@ -161,9 +159,9 @@ public final class Player {
 
     int ret = (Collections.max(tmpMap.values())); // the number of duplciates in the map
     tmpMap.remove(Collections.max(tmpMap.entrySet(), Map.Entry.comparingByValue()).getKey());
-    
+
     int check = Collections.max(tmpMap.values()); // now if this is 2 and the old max was 5 we had a
-    
+
     if (check == 2 && ret == 3) {
       ret = FullHouseInHand;// this is not possible normally so this wont interfere with duplicates
     } else if (check == 2 && ret == 2) {
@@ -280,7 +278,8 @@ public final class Player {
   }
 
   /**
-   *  gives card number of nth card in hand.
+   * gives card number of nth card in hand.
+   * 
    * @param position
    *          5-1 of card in hand
    * @return number of card at nth position
