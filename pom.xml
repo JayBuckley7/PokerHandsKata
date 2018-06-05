@@ -22,7 +22,7 @@
         <manifest>
             <addClasspath>true</addClasspath>
             <classpathPrefix>lib/</classpathPrefix>
-            <mainClass>com.codingdojo.pokerhandkata.HoldEm</mainClass>
+            <mainClass>com.codingdojo.pokerhandskata.HoldEm</mainClass>
         </manifest>
     </archive>
     </configuration>

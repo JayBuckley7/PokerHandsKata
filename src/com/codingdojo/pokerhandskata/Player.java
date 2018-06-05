@@ -145,14 +145,7 @@ public final class Player {
    * @return true if true false otherwise
    */
   Boolean hasStraightFlush() {
-    boolean tmp = false;
-    // 5 cards of the same suit with consecutive values.
-    // Ranked by the highest card in the hand.
-    if (isStraight() && sameSuit()) {
-      tmp = true;
-    }
-
-    return tmp;
+    return (isStraight() && sameSuit());
   }
 
   /**
@@ -202,11 +195,7 @@ public final class Player {
    * @return true if there is false otherwise
    */
   Boolean hasFourOfAKind() {
-    boolean tmp = false;
-    if (numDuplicates() == 4) {
-      tmp = true;
-    }
-    return tmp;
+    return numDuplicates() == 4;
   }
 
   /**
@@ -215,14 +204,7 @@ public final class Player {
    * @return true if present false otherwise
    */
   Boolean hasFullHouse() {
-    boolean tmp = false;
-
-    if (numDuplicates() == FullHouseInHand) { // duplicates will return 5 if their is duplciate 3
-      // and duplicate 2
-      tmp = true;
-    }
-
-    return tmp;
+    return numDuplicates() == FullHouseInHand; // duplicates will return 5 if their is duplicate 3
   }
 
   /**
@@ -231,11 +213,7 @@ public final class Player {
    * @return true if present false otherwise
    */
   Boolean hasFlush() {
-    boolean tmp = false;
-    if (sameSuit()) {
-      tmp = true;
-    }
-    return tmp;
+    return sameSuit();
   }
 
   /**
@@ -257,13 +235,7 @@ public final class Player {
    * @return true if present false otherwise
    */
   Boolean hasThreeOfAKind() {
-    boolean tmp = false;
-
-    if (numDuplicates() == 3) {
-      tmp = true;
-    }
-
-    return tmp;
+    return numDuplicates() == 3;
   }
 
   /**
@@ -272,14 +244,7 @@ public final class Player {
    * @return true if present false otherwise
    */
   Boolean hasTwoPair() {
-    boolean tmp = false;
-    if (numDuplicates() == TwoPairInHand) { // duplicates will return this if their is 2 duplicates
-     
-      tmp = true;
-
-    }
-
-    return tmp;
+    return numDuplicates() == TwoPairInHand;
   }
 
   /**
@@ -288,12 +253,7 @@ public final class Player {
    * @return true if present false otherwise
    */
   Boolean hasPair() {
-    boolean tmp = false;
-    if (numDuplicates() == 2) {
-      tmp = true;
-    }
-
-    return tmp;
+    return numDuplicates() == 2;
   }
 
   /**

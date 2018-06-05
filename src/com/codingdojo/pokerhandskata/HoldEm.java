@@ -436,7 +436,7 @@ public final class HoldEm {
     } else if (p.hasThreeOfAKind()) {
       int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
       p.score = (THREE_KIND + (HIGH_CARD * k));
-      p.winCondition = "three of a kind:" + Card.cardIntToString(k) + "'s";
+      p.winCondition = "three of a kind: " + Card.cardIntToString(k) + "'s";
 
     } else if (p.hasTwoPair()) {
       int k = Collections.max(p.map.entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -473,7 +473,7 @@ public final class HoldEm {
    *          can be file name
    */
   public static void main(String[] args) {
-
+    
     /*
      * Take input file.
      */
